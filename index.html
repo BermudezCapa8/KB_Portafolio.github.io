@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kevin Bermúdez González | Portafolio</title>
+  <meta name="description" content="Portafolio de Kevin Bermúdez González: soporte TI, operaciones de seguridad y desarrollo de software.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== Paleta de colores (cámbialos aquí y se actualiza toda la página) ===== */
+    :root {
+      --negro: #0b0b0d;
+      --negro-2: #141417;
+      --gris: #1f1f24;
+      --gris-borde: #2c2c33;
+      --gris-texto: #a1a1aa;
+      --blanco: #f5f5f5;
+      --rojo: #e11d2e;
+      --rojo-oscuro: #8f111c;
+      --amarillo: #fbbf24;
+      --radio: 14px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "Inter", system-ui, sans-serif;
+      background: var(--negro);
+      color: var(--blanco);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    .contenedor { width: min(1100px, 100% - 32px); margin-inline: auto; }
+    .mono { font-family: "JetBrains Mono", monospace; }
+
+    /* ===== Barra de navegación ===== */
+    nav {
+      position: fixed; inset: 0 0 auto 0; z-index: 50;
+      background: rgba(11, 11, 13, 0.8);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--gris-borde);
+    }
+    nav .contenedor { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .logo { font-weight: 800; font-size: 1.2rem; }
+    .logo span { color: var(--rojo); }
+    .enlaces { display: flex; gap: 24px; align-items: center; }
+    .enlaces a { color: var(--gris-texto); font-size: 0.95rem; transition: color .2s; }
+    .enlaces a:hover, .enlaces a.activo { color: var(--blanco); }
+    .btn-idioma {
+      background: var(--gris); color: var(--amarillo);
+      border: 1px solid var(--gris-borde); border-radius: 8px;
+      padding: 6px 12px; cursor: pointer; font-weight: 600; font-family: inherit;
+    }
+    .btn-idioma:hover { border-color: var(--amarillo); }
+
+    /* ===== Portada (hero) ===== */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center;
+      position: relative; padding-top: 64px;
+    }
+    /* Cuadrícula de fondo sutil */
+    .hero::before {
+      content: ""; position: absolute; inset: 0; z-index: -1;
+      background-image:
+        linear-gradient(var(--gris) 1px, transparent 1px),
+        linear-gradient(90deg, var(--gris) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
+      opacity: .6;
+    }
+    /* Resplandor rojo que sigue al mouse */
+    .resplandor {
+      position: fixed; width: 500px; height: 500px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(225, 29, 46, .18), transparent 65%);
+      pointer-events: none; z-index: -1; transform: translate(-50%, -50%);
+      transition: left .15s ease-out, top .15s ease-out;
+    }
+    .etiqueta {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: var(--amarillo); font-size: .9rem; margin-bottom: 16px;
+    }
+    .punto {
+      width: 8px; height: 8px; border-radius: 50%; background: var(--amarillo);
+      box-shadow: 0 0 0 0 rgba(251, 191, 36, .7); animation: latido 2s infinite;
+    }
+    @keyframes latido { 70% { box-shadow: 0 0 0 10px rgba(251, 191, 36, 0); } 100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0); } }
+
+    .hero h1 { font-size: clamp(2.4rem, 7vw, 4.8rem); line-height: 1.05; font-weight: 800; }
+    .hero h1 .apellido { color: var(--rojo); }
+    .rol { font-size: clamp(1.1rem, 2.5vw, 1.5rem); color: var(--gris-texto); margin: 18px 0 28px; min-height: 2.2em; }
+    .rol .escrito { color: var(--blanco); }
+    .cursor { color: var(--rojo); animation: parpadeo 1s steps(1) infinite; }
+    @keyframes parpadeo { 50% { opacity: 0; } }
+
+    .botones { display: flex; flex-wrap: wrap; gap: 12px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 22px; border-radius: 10px; font-weight: 600;
+      transition: transform .2s, background .2s, border-color .2s;
+      border: 1px solid transparent; cursor: pointer; font-family: inherit; font-size: 1rem;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-rojo { background: var(--rojo); color: var(--blanco); }
+    .btn-rojo:hover { background: var(--rojo-oscuro); }
+    .btn-borde { background: transparent; color: var(--blanco); border-color: var(--gris-borde); }
+    .btn-borde:hover { border-color: var(--amarillo); color: var(--amarillo); }
+    .btn svg { width: 18px; height: 18px; }
+
+    /* ===== Secciones ===== */
+    section { padding: 100px 0; }
+    .titulo-seccion { font-size: clamp(1.8rem, 4vw, 2.4rem); font-weight: 800; margin-bottom: 40px; }
+    .titulo-seccion .num { color: var(--rojo); font-family: "JetBrains Mono", monospace; font-size: .6em; margin-right: 10px; }
+
+    .tarjeta {
+      background: var(--negro-2); border: 1px solid var(--gris-borde);
+      border-radius: var(--radio); padding: 28px;
+      transition: border-color .25s, transform .25s;
+    }
+    .tarjeta:hover { border-color: var(--rojo); }
+
+    /* Sobre mí */
+    .sobre-mi { display: grid; grid-template-columns: 1.6fr 1fr; gap: 24px; }
+    .sobre-mi p { color: var(--gris-texto); margin-bottom: 14px; }
+    .sobre-mi p strong { color: var(--blanco); }
+    .datos { display: grid; gap: 16px; }
+    .dato .valor { font-size: 2rem; font-weight: 800; color: var(--amarillo); }
+    .dato .texto { color: var(--gris-texto); font-size: .9rem; }
+
+    /* Habilidades con filtro */
+    .filtros { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; }
+    .filtro {
+      background: var(--gris); color: var(--gris-texto);
+      border: 1px solid var(--gris-borde); border-radius: 999px;
+      padding: 8px 16px; cursor: pointer; font-family: inherit; font-size: .9rem;
+      transition: all .2s;
+    }
+    .filtro:hover { color: var(--blanco); }
+    .filtro.activo { background: var(--rojo); border-color: var(--rojo); color: var(--blanco); }
+    .habilidades { display: flex; flex-wrap: wrap; gap: 10px; }
+    .habilidad {
+      background: var(--gris); border: 1px solid var(--gris-borde);
+      padding: 10px 16px; border-radius: 10px; font-size: .95rem;
+      transition: opacity .3s, transform .3s, border-color .2s;
+    }
+    .habilidad:hover { border-color: var(--amarillo); }
+    .habilidad.oculta { opacity: .15; transform: scale(.95); }
+
+    /* Experiencia: línea de tiempo con tarjetas desplegables */
+    .linea-tiempo { position: relative; padding-left: 28px; }
+    .linea-tiempo::before {
+      content: ""; position: absolute; left: 6px; top: 8px; bottom: 8px;
+      width: 2px; background: linear-gradient(var(--rojo), var(--gris-borde));
+    }
+    .trabajo { position: relative; margin-bottom: 20px; }
+    .trabajo::before {
+      content: ""; position: absolute; left: -28px; top: 32px;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: var(--negro); border: 3px solid var(--rojo);
+    }
+    .trabajo-cabecera {
+      display: flex; justify-content: space-between; align-items: center; gap: 16px;
+      cursor: pointer; width: 100%; background: none; border: none; color: inherit;
+      font-family: inherit; text-align: left;
+    }
+    .trabajo h3 { font-size: 1.2rem; }
+    .trabajo .empresa { color: var(--amarillo); font-weight: 500; }
+    .trabajo .fecha { color: var(--gris-texto); font-size: .85rem; white-space: nowrap; }
+    .flecha { color: var(--rojo); transition: transform .3s; font-size: 1.3rem; }
+    .trabajo.abierto .flecha { transform: rotate(180deg); }
+    .detalle { max-height: 0; overflow: hidden; transition: max-height .4s ease; }
+    .detalle ul { padding: 18px 0 0 18px; color: var(--gris-texto); }
+    .detalle li { margin-bottom: 8px; }
+    .detalle li::marker { color: var(--rojo); }
+
+    /* Proyectos */
+    .proyectos { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+    .proyecto { display: flex; flex-direction: column; }
+    .proyecto:hover { transform: translateY(-4px); }
+    .proyecto .icono { font-size: 1.8rem; margin-bottom: 12px; }
+    .proyecto h3 { margin-bottom: 8px; }
+    .proyecto p { color: var(--gris-texto); flex: 1; margin-bottom: 16px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag { font-size: .78rem; color: var(--amarillo); background: rgba(251, 191, 36, .08); padding: 4px 10px; border-radius: 6px; }
+    .proyecto.vacio { border-style: dashed; align-items: center; justify-content: center; text-align: center; min-height: 220px; }
+
+    /* Formación */
+    .formacion { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+    .formacion h3 { font-size: 1.05rem; margin-bottom: 6px; }
+    .formacion .lugar { color: var(--amarillo); font-size: .9rem; }
+    .formacion .anio { color: var(--gris-texto); font-size: .85rem; }
+
+    /* Contacto */
+    .contacto { text-align: center; }
+    .contacto p { color: var(--gris-texto); max-width: 560px; margin: 0 auto 32px; }
+    .contacto .botones { justify-content: center; }
+
+    footer { border-top: 1px solid var(--gris-borde); padding: 28px 0; text-align: center; color: var(--gris-texto); font-size: .85rem; }
+
+    /* Aviso de "copiado" */
+    .aviso {
+      position: fixed; bottom: 24px; left: 50%; transform: translate(-50%, 120px);
+      background: var(--amarillo); color: var(--negro); font-weight: 600;
+      padding: 12px 22px; border-radius: 10px; transition: transform .35s; z-index: 100;
+    }
+    .aviso.visible { transform: translate(-50%, 0); }
+
+    /* Animación de aparición al hacer scroll */
+    .aparecer { opacity: 0; transform: translateY(30px); transition: opacity .7s, transform .7s; }
+    .aparecer.visible { opacity: 1; transform: none; }
+
+    /* ===== Versión para celular ===== */
+    @media (max-width: 760px) {
+      .enlaces a { display: none; }
+      .sobre-mi { grid-template-columns: 1fr; }
+      section { padding: 70px 0; }
+      .trabajo-cabecera { flex-wrap: wrap; }
+      .resplandor { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+      .aparecer { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="resplandor" id="resplandor"></div>
+
+  <!-- ===== Navegación ===== -->
+  <nav>
+    <div class="contenedor">
+      <a href="#inicio" class="logo">KB<span>.</span></a>
+      <div class="enlaces">
+        <a href="#sobre-mi" data-es="Sobre mí" data-en="About">Sobre mí</a>
+        <a href="#experiencia" data-es="Experiencia" data-en="Experience">Experiencia</a>
+        <a href="#proyectos" data-es="Proyectos" data-en="Projects">Proyectos</a>
+        <a href="#contacto" data-es="Contacto" data-en="Contact">Contacto</a>
+        <button class="btn-idioma" id="btnIdioma" aria-label="Cambiar idioma">EN</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== Portada ===== -->
+  <header class="hero" id="inicio">
+    <div class="contenedor">
+      <div class="etiqueta mono">
+        <span class="punto"></span>
+        <span data-es="Alajuela, Costa Rica · Disponible" data-en="Alajuela, Costa Rica · Available">Alajuela, Costa Rica · Disponible</span>
+      </div>
+      <h1>Kevin Bermúdez<br><span class="apellido">González</span></h1>
+      <p class="rol mono">&gt; <span class="escrito" id="escrito"></span><span class="cursor">_</span></p>
+      <div class="botones">
+        <a class="btn btn-rojo" href="https://www.linkedin.com/in/kevin-berm%C3%BAdez-gonz%C3%A1lez/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+          LinkedIn
+        </a>
+        <button class="btn btn-borde" data-copiar="+506 6118-3521">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          6118-3521
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===== Sobre mí ===== -->
+    <section id="sobre-mi">
+      <div class="contenedor">
+        <h2 class="titulo-seccion aparecer"><span class="num">01.</span><span data-es="Sobre mí" data-en="About me">Sobre mí</span></h2>
+        <div class="sobre-mi">
+          <div class="tarjeta aparecer">
+            <p data-es="Profesional en <strong>soporte TI y operaciones de seguridad</strong>, con experiencia apoyando entornos empresariales como Amazon e Intel: resolución de problemas de hardware y software, gestión de tickets de incidentes, documentación de eventos operativos y cumplimiento de procedimientos establecidos."
+               data-en="<strong>IT support and security operations</strong> professional with experience supporting enterprise environments such as Amazon and Intel: troubleshooting hardware and software issues, managing incident tickets, documenting operational events and following established procedures.">
+              Profesional en <strong>soporte TI y operaciones de seguridad</strong>, con experiencia apoyando entornos empresariales como Amazon e Intel: resolución de problemas de hardware y software, gestión de tickets de incidentes, documentación de eventos operativos y cumplimiento de procedimientos establecidos.
+            </p>
+            <p data-es="Tengo formación técnica en <strong>Desarrollo de Software</strong>, con conocimientos en Java, JavaScript, PHP, C++, .NET, HTML, CSS y MySQL. Soy detallista y adaptable, con un gran interés en la <strong>gestión de identidades y accesos (IAM)</strong>, la seguridad de la información y el crecimiento técnico continuo."
+               data-en="I have a technical background in <strong>Software Development</strong>, with knowledge of Java, JavaScript, PHP, C++, .NET, HTML, CSS and MySQL. Detail-oriented and adaptable, with a strong interest in <strong>identity and access management (IAM)</strong>, information security and continued technical growth.">
+              Tengo formación técnica en <strong>Desarrollo de Software</strong>, con conocimientos en Java, JavaScript, PHP, C++, .NET, HTML, CSS y MySQL. Soy detallista y adaptable, con un gran interés en la <strong>gestión de identidades y accesos (IAM)</strong>, la seguridad de la información y el crecimiento técnico continuo.
+            </p>
+          </div>
+          <div class="datos">
+            <div class="tarjeta dato aparecer">
+              <div class="valor"><span class="contador" data-meta="3">0</span>+</div>
+              <div class="texto" data-es="Años de experiencia en TI y seguridad" data-en="Years of IT & security experience">Años de experiencia en TI y seguridad</div>
+            </div>
+            <div class="tarjeta dato aparecer">
+              <div class="valor"><span class="contador" data-meta="9">0</span></div>
+              <div class="texto" data-es="Lenguajes y tecnologías" data-en="Languages & technologies">Lenguajes y tecnologías</div>
+            </div>
+            <div class="tarjeta dato aparecer">
+              <div class="valor">C1</div>
+              <div class="texto" data-es="Nivel de inglés · Español nativo" data-en="English level · Native Spanish">Nivel de inglés · Español nativo</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Habilidades ===== -->
+    <section id="habilidades">
+      <div class="contenedor">
+        <h2 class="titulo-seccion aparecer"><span class="num">02.</span><span data-es="Habilidades" data-en="Skills">Habilidades</span></h2>
+        <div class="filtros aparecer">
+          <button class="filtro activo" data-filtro="todas" data-es="Todas" data-en="All">Todas</button>
+          <button class="filtro" data-filtro="soporte" data-es="Soporte TI" data-en="IT Support">Soporte TI</button>
+          <button class="filtro" data-filtro="seguridad" data-es="Seguridad" data-en="Security">Seguridad</button>
+          <button class="filtro" data-filtro="codigo" data-es="Programación" data-en="Programming">Programación</button>
+        </div>
+        <div class="habilidades aparecer">
+          <span class="habilidad" data-tipo="soporte" data-es="Soporte TI y troubleshooting" data-en="IT Support & Troubleshooting">Soporte TI y troubleshooting</span>
+          <span class="habilidad" data-tipo="soporte" data-es="Soporte de hardware y software" data-en="Hardware & Software Support">Soporte de hardware y software</span>
+          <span class="habilidad" data-tipo="soporte seguridad" data-es="Gestión de incidentes y escalamiento" data-en="Incident Management & Escalation">Gestión de incidentes y escalamiento</span>
+          <span class="habilidad" data-tipo="seguridad" data-es="Monitoreo de alertas de seguridad" data-en="Security Alert Monitoring">Monitoreo de alertas de seguridad</span>
+          <span class="habilidad" data-tipo="seguridad" data-es="Procedimientos y cumplimiento" data-en="Procedures & Compliance">Procedimientos y cumplimiento</span>
+          <span class="habilidad" data-tipo="soporte seguridad" data-es="Documentación técnica y reportes" data-en="Technical Documentation & Reporting">Documentación técnica y reportes</span>
+          <span class="habilidad" data-tipo="codigo">Java</span>
+          <span class="habilidad" data-tipo="codigo">JavaScript</span>
+          <span class="habilidad" data-tipo="codigo">PHP</span>
+          <span class="habilidad" data-tipo="codigo">C++</span>
+          <span class="habilidad" data-tipo="codigo">.NET</span>
+          <span class="habilidad" data-tipo="codigo">HTML</span>
+          <span class="habilidad" data-tipo="codigo">CSS</span>
+          <span class="habilidad" data-tipo="codigo">MySQL</span>
+          <span class="habilidad" data-tipo="soporte">Microsoft Office</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Experiencia ===== -->
+    <section id="experiencia">
+      <div class="contenedor">
+        <h2 class="titulo-seccion aparecer"><span class="num">03.</span><span data-es="Experiencia" data-en="Experience">Experiencia</span></h2>
+        <div class="linea-tiempo">
+          <div class="trabajo tarjeta aparecer abierto">
+            <button class="trabajo-cabecera">
+              <div>
+                <h3 data-es="Operador" data-en="Operator">Operador</h3>
+                <div class="empresa">Securitas (Amazon)</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:14px">
+                <span class="fecha mono" data-es="Ene 2024 – Actualidad" data-en="Jan 2024 – Present">Ene 2024 – Actualidad</span>
+                <span class="flecha">⌄</span>
+              </div>
+            </button>
+            <div class="detalle">
+              <ul>
+                <li data-es="Monitoreo y análisis de alertas de seguridad en las operaciones de Amazon, siguiendo procedimientos y protocolos de escalamiento." data-en="Monitor and analyze security alerts within Amazon operations, following established procedures and escalation protocols.">Monitoreo y análisis de alertas de seguridad en las operaciones de Amazon, siguiendo procedimientos y protocolos de escalamiento.</li>
+                <li data-es="Documentación precisa de incidentes para asegurar la trazabilidad, el seguimiento operativo y el cumplimiento." data-en="Document incidents accurately to support traceability, operational follow-up and compliance requirements.">Documentación precisa de incidentes para asegurar la trazabilidad, el seguimiento operativo y el cumplimiento.</li>
+                <li data-es="Creación y gestión de tickets, escalando a los equipos correspondientes y dando seguimiento según los flujos establecidos." data-en="Create and manage tickets, escalating issues to the appropriate teams and tracking them through established workflows.">Creación y gestión de tickets, escalando a los equipos correspondientes y dando seguimiento según los flujos establecidos.</li>
+                <li data-es="Elaboración de reportes operativos y registro claro de incidentes y actividades relevantes." data-en="Prepare operational reports and maintain clear records of incidents and relevant activities.">Elaboración de reportes operativos y registro claro de incidentes y actividades relevantes.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="trabajo tarjeta aparecer">
+            <button class="trabajo-cabecera">
+              <div>
+                <h3 data-es="Técnico de Soporte" data-en="Support Technician">Técnico de Soporte</h3>
+                <div class="empresa">Infotree Global Solutions (Intel)</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:14px">
+                <span class="fecha mono" data-es="Jun 2022 – Feb 2023" data-en="Jun 2022 – Feb 2023">Jun 2022 – Feb 2023</span>
+                <span class="flecha">⌄</span>
+              </div>
+            </button>
+            <div class="detalle">
+              <ul>
+                <li data-es="Soporte técnico de problemas de hardware y software en múltiples plataformas." data-en="Provided technical support for hardware and software issues across multiple platforms.">Soporte técnico de problemas de hardware y software en múltiples plataformas.</li>
+                <li data-es="Investigación de incidentes, troubleshooting y documentación de soluciones en un sistema de tickets." data-en="Investigated reported incidents, performed troubleshooting and documented resolutions through a ticketing system.">Investigación de incidentes, troubleshooting y documentación de soluciones en un sistema de tickets.</li>
+                <li data-es="Atención a usuarios siguiendo los procedimientos de soporte y coordinando la resolución de problemas." data-en="Supported users by following established support procedures and coordinating issue resolution.">Atención a usuarios siguiendo los procedimientos de soporte y coordinando la resolución de problemas.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Proyectos (aquí irás agregando los tuyos) ===== -->
+    <section id="proyectos">
+      <div class="contenedor">
+        <h2 class="titulo-seccion aparecer"><span class="num">04.</span><span data-es="Proyectos" data-en="Projects">Proyectos</span></h2>
+        <div class="proyectos">
+          <!-- Copia este bloque <article> para cada proyecto nuevo -->
+          <article class="tarjeta proyecto aparecer">
+            <div class="icono">🌐</div>
+            <h3 data-es="Este portafolio" data-en="This portfolio">Este portafolio</h3>
+            <p data-es="Sitio personal interactivo hecho con HTML, CSS y JavaScript puro. Bilingüe, adaptable a celulares y publicado gratis en GitHub Pages." data-en="Interactive personal site built with plain HTML, CSS and JavaScript. Bilingual, mobile-friendly and hosted for free on GitHub Pages.">Sitio personal interactivo hecho con HTML, CSS y JavaScript puro. Bilingüe, adaptable a celulares y publicado gratis en GitHub Pages.</p>
+            <div class="tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span></div>
+          </article>
+
+          <article class="tarjeta proyecto vacio aparecer">
+            <div class="icono">🚧</div>
+            <h3 data-es="Próximamente" data-en="Coming soon">Próximamente</h3>
+            <p data-es="Nuevos proyectos en camino." data-en="New projects on the way.">Nuevos proyectos en camino.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Formación ===== -->
+    <section id="formacion">
+      <div class="contenedor">
+        <h2 class="titulo-seccion aparecer"><span class="num">05.</span><span data-es="Formación y certificaciones" data-en="Education & Certifications">Formación y certificaciones</span></h2>
+        <div class="formacion">
+          <div class="tarjeta aparecer">
+            <h3 data-es="Técnico en Desarrollo de Software" data-en="Technical Software Development Engineer">Técnico en Desarrollo de Software</h3>
+            <div class="lugar">CTPN Carlos Luis Fallas Sibaja</div>
+            <div class="anio mono">2018 – 2020</div>
+          </div>
+          <div class="tarjeta aparecer">
+            <h3>IT Essentials: PC Hardware and Software</h3>
+            <div class="lugar">Universidad de Costa Rica</div>
+            <div class="anio mono">2021</div>
+          </div>
+          <div class="tarjeta aparecer">
+            <h3 data-es="Inglés para Call Center" data-en="English for Call Center">Inglés para Call Center</h3>
+            <div class="lugar">Academia Líder</div>
+            <div class="anio mono">2018 – 2019</div>
+          </div>
+          <div class="tarjeta aparecer">
+            <h3 data-es="Técnicas de Oficina (360 horas)" data-en="Office Techniques (360 hours)">Técnicas de Oficina (360 horas)</h3>
+            <div class="lugar">Instituto de Alajuela</div>
+            <div class="anio mono">2017</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Contacto ===== -->
+    <section id="contacto" class="contacto">
+      <div class="contenedor">
+        <h2 class="titulo-seccion aparecer"><span class="num">06.</span><span data-es="Hablemos" data-en="Let's talk">Hablemos</span></h2>
+        <p class="aparecer" data-es="¿Tienes una oportunidad o un proyecto en mente? Escríbeme por LinkedIn o llámame, con gusto converso." data-en="Have an opportunity or a project in mind? Reach out on LinkedIn or give me a call, I'd be glad to talk.">¿Tienes una oportunidad o un proyecto en mente? Escríbeme por LinkedIn o llámame, con gusto converso.</p>
+        <div class="botones aparecer">
+          <a class="btn btn-rojo" href="https://www.linkedin.com/in/kevin-berm%C3%BAdez-gonz%C3%A1lez/" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="btn btn-borde" href="tel:+50661183521" data-es="Llamar: 6118-3521" data-en="Call: 6118-3521">Llamar: 6118-3521</a>
+          <a class="btn btn-borde" href="https://wa.me/50661183521" target="_blank" rel="noopener">WhatsApp</a>
+          <a class="btn btn-borde" href="mailto:kvnbermudezg@gmail.com">kvnbermudezg@gmail.com</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="contenedor">© <span id="anio"></span> Kevin Bermúdez González</div>
+  </footer>
+
+  <div class="aviso" id="aviso"></div>
+
+  <script>
+    // ===== 1. Efecto de "máquina de escribir" en la portada =====
+    const frases = {
+      es: ["Soporte TI", "Operaciones de Seguridad", "Desarrollo de Software", "Gestión de Identidades y Accesos"],
+      en: ["IT Support", "Security Operations", "Software Development", "Identity & Access Management"]
+    };
+    let idioma = "es";
+    let indiceFrase = 0, indiceLetra = 0, borrando = false;
+    const escrito = document.getElementById("escrito");
+
+    function escribir() {
+      const frase = frases[idioma][indiceFrase % frases[idioma].length];
+      indiceLetra += borrando ? -1 : 1;
+      escrito.textContent = frase.slice(0, indiceLetra);
+
+      let espera = borrando ? 40 : 90;
+      if (!borrando && indiceLetra === frase.length) { borrando = true; espera = 1800; }
+      else if (borrando && indiceLetra === 0) { borrando = false; indiceFrase++; espera = 400; }
+      setTimeout(escribir, espera);
+    }
+    escribir();
+
+    // ===== 2. Cambio de idioma ES / EN =====
+    // Cada elemento con data-es y data-en cambia su texto al pulsar el botón.
+    const btnIdioma = document.getElementById("btnIdioma");
+    btnIdioma.addEventListener("click", () => {
+      idioma = idioma === "es" ? "en" : "es";
+      document.documentElement.lang = idioma;
+      btnIdioma.textContent = idioma === "es" ? "EN" : "ES";
+      document.querySelectorAll("[data-es]").forEach(el => {
+        el.innerHTML = el.dataset[idioma];
+      });
+      indiceLetra = 0; borrando = false;
+    });
+
+    // ===== 3. Filtro de habilidades =====
+    document.querySelectorAll(".filtro").forEach(boton => {
+      boton.addEventListener("click", () => {
+        document.querySelectorAll(".filtro").forEach(b => b.classList.remove("activo"));
+        boton.classList.add("activo");
+        const filtro = boton.dataset.filtro;
+        document.querySelectorAll(".habilidad").forEach(h => {
+          const coincide = filtro === "todas" || h.dataset.tipo.includes(filtro);
+          h.classList.toggle("oculta", !coincide);
+        });
+      });
+    });
+
+    // ===== 4. Tarjetas de experiencia desplegables =====
+    function ajustarDetalle(trabajo) {
+      const detalle = trabajo.querySelector(".detalle");
+      detalle.style.maxHeight = trabajo.classList.contains("abierto") ? detalle.scrollHeight + "px" : "0";
+    }
+    document.querySelectorAll(".trabajo").forEach(trabajo => {
+      ajustarDetalle(trabajo);
+      trabajo.querySelector(".trabajo-cabecera").addEventListener("click", () => {
+        trabajo.classList.toggle("abierto");
+        ajustarDetalle(trabajo);
+      });
+    });
+    // Recalcular la altura al cambiar idioma o tamaño de ventana
+    btnIdioma.addEventListener("click", () => document.querySelectorAll(".trabajo").forEach(ajustarDetalle));
+    window.addEventListener("resize", () => document.querySelectorAll(".trabajo").forEach(ajustarDetalle));
+
+    // ===== 5. Copiar el teléfono al portapapeles =====
+    const aviso = document.getElementById("aviso");
+    function mostrarAviso(texto) {
+      aviso.textContent = texto;
+      aviso.classList.add("visible");
+      setTimeout(() => aviso.classList.remove("visible"), 2000);
+    }
+    document.querySelectorAll("[data-copiar]").forEach(boton => {
+      boton.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(boton.dataset.copiar);
+          mostrarAviso(idioma === "es" ? "📋 Teléfono copiado" : "📋 Phone copied");
+        } catch {
+          window.location.href = "tel:" + boton.dataset.copiar.replace(/[^+\d]/g, "");
+        }
+      });
+    });
+
+    // ===== 6. Aparición de elementos y contadores al hacer scroll =====
+    const observador = new IntersectionObserver(entradas => {
+      entradas.forEach(entrada => {
+        if (!entrada.isIntersecting) return;
+        entrada.target.classList.add("visible");
+        entrada.target.querySelectorAll(".contador").forEach(animarContador);
+        observador.unobserve(entrada.target);
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll(".aparecer").forEach(el => observador.observe(el));
+
+    function animarContador(el) {
+      const meta = Number(el.dataset.meta);
+      let actual = 0;
+      const paso = setInterval(() => {
+        el.textContent = ++actual;
+        if (actual >= meta) clearInterval(paso);
+      }, 120);
+    }
+
+    // ===== 7. Resplandor rojo que sigue al mouse =====
+    const resplandor = document.getElementById("resplandor");
+    window.addEventListener("mousemove", e => {
+      resplandor.style.left = e.clientX + "px";
+      resplandor.style.top = e.clientY + "px";
+    });
+
+    // ===== 8. Resaltar la sección actual en el menú =====
+    const enlaces = document.querySelectorAll(".enlaces a");
+    window.addEventListener("scroll", () => {
+      let actual = "";
+      document.querySelectorAll("section").forEach(s => {
+        if (window.scrollY >= s.offsetTop - 120) actual = s.id;
+      });
+      enlaces.forEach(a => a.classList.toggle("activo", a.getAttribute("href") === "#" + actual));
+    });
+
+    document.getElementById("anio").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
